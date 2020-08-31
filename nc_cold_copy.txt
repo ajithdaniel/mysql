@@ -1,0 +1,17 @@
+Before starting nc:
+​
+# on both source and destination
+1. apt-get install pigz 
+​
+On destination:
+2. stop mysql and rm -rf /dbvol/mysql/lib 
+3. on screen : cd /dbvol/mysql/  && nc -v -l 12366 | pigz -d | tar xvf -
+####
+On source:
+4. purge binlogs 
+5. stop mysql 
+6. on screen : cd  /dbvol/mysql/ && tar -vc lib | pigz | nc -v <destination ip> 12366
+####
+After nc completes:
+7. on destination : mv /dbvol/mysql/lib/auto.cnf after copying.
+8. start mysql on both source and destination 
