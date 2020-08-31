@@ -1,0 +1,4 @@
+ netstat -tnuap |grep -i 9042|awk '{print $(NF-2)}'|cut -d: -f1|sort -n |uniq -c|sort -nr
+ 
+ # overall connections
+ netstat -tnuap |grep -i 9042|awk '{print $(NF-2)}'|cut -d: -f1| wc -l
