@@ -1,0 +1,2 @@
+# change table_schema= and interval <n> days to conrtol the retenion
+select concat(' alter table ', TABLE_SCHEMA,'.',TABLE_NAME,' drop partition ',PARTITION_NAME,';select sleep(3);'),substring(from_unixtime(left(PARTITION_DESCRIPTION,10)),1,10) from  INFORMATION_SCHEMA.PARTITIONS where table_schema='<schema>' and PARTITION_DESCRIPTION not in ('0','MINVALUE','MAXVALUE') and length(PARTITION_DESCRIPTION)=10 and substring(from_unixtime(left(PARTITION_DESCRIPTION,10)),1,10) < date_sub(now(),interval 62 day) and table_rows>0 ;
